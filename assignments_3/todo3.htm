@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elon Musk loses trillionaire status - Facebook Post</title>
+  <style>
+    /* Reset and default Facebook font */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5; /* Facebook light gray background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Facebook Post Card Container */
+    .fb-post-card {
+      background-color: #ffffff;
+      width: 100%;
+      max-width: 580px;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      border: 1px solid #e4e6eb;
+    }
+
+    /* Header Section */
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Publisher Avatar */
+    .avatar-container {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #111111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 20px;
+      font-family: "Georgia", serif;
+      border: 1px solid #e4e6eb;
+      user-select: none;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .profile-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #050505;
+      text-decoration: none;
+    }
+
+    .profile-name:hover {
+      text-decoration: underline;
+    }
+
+    /* Verified Blue Badge Icon */
+    .verified-badge {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background-color: #1877f2;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .verified-badge::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 3px;
+      height: 6px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .post-subtitle {
+      font-size: 13px;
+      color: #65676b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 1px;
+    }
+
+    /* Sponsored text */
+    .sponsored-text {
+      font-weight: 500;
+    }
+
+    /* Globe Icon (Public setting) */
+    .globe-icon {
+      width: 12px;
+      height: 12px;
+      fill: #65676b;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #65676b;
+      transition: background-color 0.15s ease;
+    }
+
+    .header-action-btn:hover {
+      background-color: #f2f2f2;
+    }
+
+    /* Post Main Text Caption */
+    .post-caption {
+      font-size: 15px;
+      line-height: 1.4;
+      color: #050505;
+      padding: 4px 16px 12px 16px;
+    }
+
+    /* Main Post Image Container */
+    .post-media-container {
+      width: 100%;
+      border-top: 1px solid #e4e6eb;
+      border-bottom: 1px solid #e4e6eb;
+      overflow: hidden;
+      display: flex;
+      background-color: #000000;
+    }
+
+    .post-image {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.15s ease;
+    }
+
+    .post-image:hover {
+      opacity: 0.95;
+      cursor: pointer;
+    }
+
+    /* Link Preview Container */
+    .link-preview-box {
+      background-color: #f0f2f5;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e4e6eb;
+      gap: 16px;
+    }
+
+    .preview-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .preview-domain {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #65676b;
+      letter-spacing: 0.3px;
+    }
+
+    .preview-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #050505;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-description {
+      font-size: 13px;
+      color: #65676b;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Action button in the preview: "ดูเพิ่มเติม" */
+    .preview-action-btn {
+      background-color: #e4e6eb;
+      color: #050505;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease;
+    }
+
+    .preview-action-btn:hover {
+      background-color: #d8dadf;
+    }
+
+    /* Post Stats (Reactions count & Comments count) */
+    .post-stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      user-select: none;
+    }
+
+    .stats-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Circular Like Icon Badge */
+    .like-badge {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: #1877f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .like-badge svg {
+      width: 10px;
+      height: 10px;
+      fill: #ffffff;
+    }
+
+    .stats-reaction-text {
+      font-size: 14px;
+      color: #65676b;
+    }
+
+    .stats-right {
+      display: flex;
+      gap: 12px;
+      font-size: 14px;
+      color: #65676b;
+    }
+
+    .stats-comments-shares:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Interaction Divider & Actions Panel */
+    .actions-divider-wrapper {
+      padding: 0 16px;
+    }
+
+    .actions-divider {
+      border-top: 1px solid #e4e6eb;
+    }
+
+    .post-actions-panel {
+      display: flex;
+      padding: 4px;
+      margin: 0 12px;
+    }
+
+    /* Individual action button */
+    .action-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #65676b;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #f2f2f2;
+    }
+
+    .action-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #65676b;
+      transition: fill 0.15s ease;
+    }
+
+    /* Active state when "Liked" */
+    .action-btn.liked {
+      color: #1877f2;
+    }
+
+    .action-btn.liked svg {
+      fill: #1877f2;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Facebook Post Card -->
+  <div class="fb-post-card">
+    
+    <!-- Header -->
+    <div class="post-header">
+      <div class="header-left">
+        <!-- Publisher Avatar (Fortune style 'F') -->
+        <div class="avatar-container">F</div>
+        
+        <div class="profile-info">
+          <div class="profile-name-row">
+            <a href="#" class="profile-name">Fortune</a>
+            <span class="verified-badge" title="บัญชีผู้ใช้ที่ได้รับการยืนยัน"></span>
+          </div>
+          <div class="post-subtitle">
+            <span class="sponsored-text">ได้รับการสนับสนุน</span>
+            <span>·</span>
+            <!-- Globe Icon public setting -->
+            <svg class="globe-icon" viewBox="0 0 16 16">
+              <path d="M8 0a8 8 0 100 16A8 8 0 008 0zm0 1c1.66 0 3.2.59 4.4 1.57L9.5 5.5h-3L4 3.07A6.96 6.96 0 018 1zM2.06 9.5a7 7 0 010-3h1.8l1 1h2.5l.7.7-1 2.3H3.86l-1.8-1zm11.88 0h-1.8l-.7-.7 1.2-2.8h1.3a7 7 0 010 3.5zm-5.44 5.44A6.97 6.97 0 013.6 12.9l2.4-2.4h3v1.5l1.5 1.5-2.06 1.44z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <!-- More Option buttons -->
+        <button class="header-action-btn" title="ตัวเลือกเพิ่มเติม">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM18 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </button>
+        <button class="header-action-btn" title="ปิดโพสต์นี้">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.803 7.349 14.85a1.2 1.2 0 0 1-1.697-1.697l2.647-3.046-2.647-3.048a1.2 1.2 0 1 1 1.697-1.697L10 8.197l2.651-3.048a1.2 1.2 0 1 1 1.697 1.697l-2.647 3.048 2.647 3.046a1.2 1.2 0 0 1 0 1.697z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Caption Text -->
+    <div class="post-caption">
+      Elon Musk loses trillionaire status as SpaceX stock deflates—and Wisconsin officials want him investigated for election ‘bribery’
+    </div>
+
+    <!-- Post Image Area -->
+    <div class="post-media-container">
+      <img src="img/GettyImages-2280565336.jpg" alt="Elon Musk Photo" class="post-image">
+    </div>
+
+    <!-- Link Preview Details -->
+    <div class="link-preview-box">
+      <div class="preview-text">
+        <span class="preview-domain">FORTUNE.COM</span>
+        <div class="preview-title">Elon Musk loses trillionaire status as SpaceX stock deflates—and Wisconsin officials want him investigated for election ‘bribery’</div>
+        <div class="preview-description">Are SpaceX stock deflations just the start? Wisconsin officials are calling for investigations into Musk's latest election campaigns...</div>
+      </div>
+      <button class="preview-action-btn">ดูเพิ่มเติม</button>
+    </div>
+
+    <!-- Post Stats (Likes, Comments, Shares) -->
+    <div class="post-stats-row">
+      <div class="stats-left">
+        <div class="like-badge">
+          <!-- Small thumbs up svg -->
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" style="display:none;" />
+            <path d="M4 21h1v-8H4v8zm16.5-7.5c0-.83-.67-1.5-1.5-1.5H14.1l.9-4.3.03-.3c0-.38-.16-.74-.41-1.01L13.6 6 8.3 11.3c-.18.18-.3.43-.3.7v7c0 .55.45 1 1 1h7.5c.66 0 1.22-.42 1.42-1.02l2.5-5.83c.08-.22.12-.45.12-.65v-1.5z" />
+          </svg>
+        </div>
+        <span class="stats-reaction-text">2.4 พัน</span>
+      </div>
+      <div class="stats-right">
+        <span class="stats-comments-shares">103 ความคิดเห็น</span>
+        <span class="stats-comments-shares">แชร์ 45 ครั้ง</span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="actions-divider-wrapper">
+      <div class="actions-divider"></div>
+    </div>
+
+    <!-- Actions Panel buttons -->
+    <div class="post-actions-panel">
+      <!-- Like Button -->
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24">
+          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM5 11H2v11h3V11z"/>
+        </svg>
+        <span>ถูกใจ</span>
+      </button>
+
+      <!-- Comment Button -->
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 2H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h10l4 4V4c0-1.1-.9-2-2-2zm-2 11H8v-2h8v2zm0-4H8V7h8v2z" />
+        </svg>
+        <span>แสดงความคิดเห็น</span>
+      </button>
+
+      <!-- Share Button -->
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24">
+          <path d="M11.73 3.72a.75.75 0 011.04 0l6.25 6c.3.28.3.73 0 1.01l-6.25 6a.75.75 0 01-1.04-1.08L16.2 12l-4.47-3.65a.75.75 0 010-1.08zM4 12v6.5a2.5 2.5 0 002.5 2.5H13a.75.75 0 010 1.5H6.5A4 4 0 012.5 18.5V12a.75.75 0 011.5 0z" />
+        </svg>
+        <span>แชร์</span>
+      </button>
+    </div>
+
+  </div>
+
+</body>
+</html>
