@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,8 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #008eff; /* Bright blue background matching mockup */
+      background-color: #008eff;
+      /* Bright blue background matching mockup */
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -51,7 +53,7 @@
       text-align: right;
       outline: none;
       /* Box shadow to match the indent style */
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
     }
 
     /* Grid layout for buttons */
@@ -82,6 +84,7 @@
       background-color: #ffcc5c;
       color: #333333;
     }
+
     .btn-operator:hover {
       background-color: #f2bf50;
     }
@@ -91,6 +94,7 @@
       background-color: #c5e3f9;
       color: #333333;
     }
+
     .btn-digit:hover {
       background-color: #b5d5ed;
     }
@@ -100,6 +104,7 @@
       background-color: #f75c46;
       color: #ffffff;
     }
+
     .btn-clear:hover {
       background-color: #e34c37;
     }
@@ -108,8 +113,10 @@
     .btn-equals {
       background-color: #0ed196;
       color: #ffffff;
-      grid-column: span 2; /* Spans two columns as shown in mockup */
+      grid-column: span 2;
+      /* Spans two columns as shown in mockup */
     }
+
     .btn-equals:hover {
       background-color: #0cb883;
     }
@@ -117,10 +124,11 @@
     /* Press Animation Effect */
     .calc-btn:active {
       transform: scale(0.95);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
     }
   </style>
 </head>
+
 <body>
 
   <div class="calculator-card">
@@ -158,130 +166,6 @@
     </div>
   </div>
 
-  <script>
-    const screen = document.getElementById('screen');
-    let shouldResetScreen = false;
-
-    // Press number button
-    function pressDigit(num) {
-      if (screen.value === '0' || shouldResetScreen) {
-        screen.value = num;
-        shouldResetScreen = false;
-      } else {
-        screen.value += num;
-      }
-    }
-
-    // Press operator button
-    function pressOperator(op) {
-      if (shouldResetScreen) {
-        shouldResetScreen = false;
-      }
-      
-      const val = screen.value;
-      const lastChar = val.trim().slice(-1);
-      
-      // If display is empty or ends with operator, we can replace it or just not add double operators
-      if (['+', '−', '×', '÷'].includes(lastChar)) {
-        screen.value = val.slice(0, -2) + ' ' + op + ' ';
-      } else {
-        screen.value += ' ' + op + ' ';
-      }
-    }
-
-    // Press decimal button
-    function pressDecimal(dot) {
-      if (shouldResetScreen) {
-        screen.value = '0.';
-        shouldResetScreen = false;
-        return;
-      }
-
-      // Check if current number term already contains a decimal
-      const parts = screen.value.split(/\s+/);
-      const currentTerm = parts[parts.length - 1];
-      
-      if (!currentTerm.includes(dot)) {
-        if (currentTerm === '' || ['+', '−', '×', '÷'].includes(currentTerm)) {
-          screen.value += '0.';
-        } else {
-          screen.value += dot;
-        }
-      }
-    }
-
-    // Clear display
-    function clearScreen() {
-      screen.value = '0';
-      shouldResetScreen = false;
-    }
-
-    // Evaluate result
-    function calculateResult() {
-      let expression = screen.value;
-      if (!expression) return;
-
-      // Clean operators for evaluation
-      let evalExpr = expression
-        .replace(/−/g, '-')
-        .replace(/×/g, '*')
-        .replace(/÷/g, '/');
-
-      try {
-        // Safe evaluation pattern
-        // Validates mathematical expression structure before evaluating
-        if (!/^[0-9.+\-*/\s()]+$/.test(evalExpr)) {
-          throw new Error("Invalid characters");
-        }
-
-        // Perform calculation
-        let result = Function(`"use strict"; return (${evalExpr})`)();
-
-        if (result === undefined || isNaN(result) || !isFinite(result)) {
-          screen.value = 'Error';
-        } else {
-          // Format floats nicely (max 10 decimals, remove trailing zeros)
-          screen.value = parseFloat(Number(result).toFixed(10)).toString();
-        }
-      } catch (err) {
-        screen.value = 'Error';
-      }
-      shouldResetScreen = true;
-    }
-
-    // Add keyboard inputs support for convenience
-    document.addEventListener('keydown', (e) => {
-      if (e.key >= '0' && e.key <= '9') {
-        pressDigit(e.key);
-      } else if (e.key === '.') {
-        pressDecimal('.');
-      } else if (e.key === '+') {
-        pressOperator('+');
-      } else if (e.key === '-') {
-        pressOperator('−');
-      } else if (e.key === '*') {
-        pressOperator('×');
-      } else if (e.key === '/') {
-        pressOperator('÷');
-        e.preventDefault(); // prevent search box shortcut in some browsers
-      } else if (e.key === 'Enter' || e.key === '=') {
-        calculateResult();
-      } else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') {
-        clearScreen();
-      } else if (e.key === 'Backspace') {
-        // Backspace to delete last character
-        if (shouldResetScreen) {
-          clearScreen();
-        } else {
-          let val = screen.value;
-          if (val.endsWith(' ')) {
-            screen.value = val.slice(0, -3); // remove ' + '
-          } else {
-            screen.value = val.slice(0, -1) || '0';
-          }
-        }
-      }
-    });
-  </script>
 </body>
+
 </html>
