@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: sans-serif;
+        background-color: #f3f4f6;
+    }
+
+    .hero {
+        position: relative;
+        min-height: 520px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1b1646 0%, #110d32 100%);
+        display: flex;
+        align-items: center;
+        padding: 80px 8%;
+    }
+
+    .hero-image {
+        height: 90%;
+        object-fit: contain;
+        position: absolute;
+        right: 8%;
+        bottom: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 25px;
+        left: 5%;
+        right: 5%;
+        background-color: #00a8ff;
+        padding: 12px 30px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+        color: #ffffff;
+        font-family: sans-serif;
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .nav-links a {
+        padding: 8px 18px;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+
+    .nav-links a.active {
+        background-color: #ffffff;
+        color: #e2b13c;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 50%;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .hero-subtitle {
+        color: #38bdf8;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+        color: #e2b13c;
+        font-family: sans-serif;
+        font-size: 46px;
+        font-weight: 400;
+        margin-bottom: 30px;
+        line-height: 1.25;
+    }
+
+    .btn-something {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        background-color: #00a8ff;
+        border: none;
+        border-radius: 6px;
+        overflow: hidden;
+        cursor: pointer;
+        padding: 0;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-something:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-something:active {
+        transform: translateY(0);
+    }
+
+    .btn-something .icon {
+        background-color: #e2b13c;
+        padding: 12px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .btn-something .btn-text {
+        color: #ffffff;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Cards Section */
+    .cards-section {
+        background-color: #f3f4f6;
+        padding: 60px 5%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cards-container {
+        max-width: 1100px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        justify-items: center;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 280px;
+        width: 100%;
+        max-width: 340px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .card-title {
+        font-family: sans-serif;
+        color: #38bdf8;
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .card-icon {
+        background-color: #e2b13c;
+        color: #ffffff;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 2px 8px rgba(226, 177, 60, 0.3);
+    }
+
+    .card-text {
+        color: #6b7280;
+        font-size: 13.5px;
+        line-height: 1.6;
+        margin-bottom: 25px;
+    }
+
+    .card-btn {
+        align-self: flex-start;
+        background-color: #00a8ff;
+        color: #ffffff;
+        padding: 8px 22px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 13.5px;
+        font-weight: 600;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 168, 255, 0.2);
+    }
+
+    .card-btn:hover {
+        background-color: #008dd6;
+        transform: translateY(-1px);
+    }
+</style>
+
+<body>
+    <section class="hero">
+        <nav class="navbar">
+            <div class="logo">Mountain</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Solutions</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">Maecenas Tincidu Placerat</p>
+            <h1 class="hero-title">Aliquam Anisi Estinvive</h1>
+            <button class="btn-something">
+                <span class="icon">🧩</span>
+                <span class="btn-text">LOREMIP</span>
+            </button>
+        </div>
+
+        <img class="hero-image" src="./img/high-resolutionl.jpg" alt="Mountain">
+    </section>
+
+    <section class="cards-section">
+        <div class="cards-container">
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">Short About Us</h2>
+                        <div class="card-icon">A</div>
+                    </div>
+                    <p class="card-text">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium, totam
+                    </p>
+                </div>
+                <a href="#" class="card-btn">More Info</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">Short About Us</h2>
+                        <div class="card-icon">B</div>
+                    </div>
+                    <p class="card-text">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium, totam
+                    </p>
+                </div>
+                <a href="#" class="card-btn">More Info</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">Short About Us</h2>
+                        <div class="card-icon">C</div>
+                    </div>
+                    <p class="card-text">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                        laudantium, totam
+                    </p>
+                </div>
+                <a href="#" class="card-btn">More Info</a>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

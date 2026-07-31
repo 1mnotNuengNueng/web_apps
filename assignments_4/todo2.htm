@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .container {
+            padding: 50px;
+            margin: 20%;
+            background-color: rgb(248, 249, 250);
+            display: block;
+        }
+
+        .paragraph {
+            color: gray;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-row label {
+            margin-bottom: 8px;
+        }
+
+        .container input:not(.submit):not(.input-checkbox) {
+            padding: 15px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .input-checkbox {
+            accent-color: #ff7a00;
+            width: auto !important;
+        }
+
+        .input-checkbox-label {
+            font-size: 12px;
+            color: gray;
+        }
+
+        .submit {
+            background-color: #ff7a00;
+            padding: 12px 32px;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            width: auto;
+            display: inline-block;
+            margin: 10% auto;
+            max-width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <p class="paragraph">Lorem, ipsum dolor sit amet elit. Sapirnte sit eos consecteur adipisicing.</p>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">First name</label>
+                <input class="form" placeholder="e.g. John" type="name">
+            </div>
+            <div class="form-group">
+                <label for="surname">Last name</label>
+                <input class="form" placeholder="e.g. Smith" type="surname">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form" placeholder="e.g. john@your-domain.com" type="email">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input class="form" placeholder="+00 0000 000 0000" type="tel">
+            </div>
+            <div class="form-group">
+                <label for="website">Website</label>
+                <input class="form" placeholder="e.g. https://www.example.com" type="text">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form" placeholder="Your password" type="password">
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Re-type Password</label>
+                <input class="form" placeholder="Your password" type="password">
+            </div>
+        </div>
+        <div class="checkbox-group">
+            <input class="input-checkbox" type="checkbox" name="policy" id="policy">
+            <label class="input-checkbox-label" for="policy">
+                Creating an account means you're okay with our
+                <a href="#">Terms and Conditions</a> and our
+                <a href="#">Privacy Policy</a>.
+            </label>
+        </div>
+
+        <input class="submit" type="submit" value="Register">
+    </div>
+
+
+
+</body>
+
+</html>
