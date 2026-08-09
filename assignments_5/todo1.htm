@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Script</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .btn-1 {
+            background-color: red;
+            padding: 12px 20px;
+        }
+
+        .btn-1-active {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>ข้อ 1.</h2>
+    <button class="btn-1" onclick="toggleButton(this)">
+        Go Blue
+    </button>
+    <script>
+        function toggleButton(btn) {
+            btn.classList.toggle('btn-1-active');
+
+            if (btn.classList.contains('btn-1-active')) {
+                btn.textContent = 'Go Red';
+            } else {
+                btn.textContent = 'Go Blue';
+            }
+        }
+    </script>
+    <br>
+    <br>
+    <h2>ข้อ 2.</h2>
+    <div style="margin-top: 15px;">
+        <div id="display-text" style="color: #ff007f; font-size: 28px; font-family: serif; margin-bottom: 20px;">Hello
+            world</div>
+        <input type="text" id="input-text" value="Hello world"
+            style="font-size: 18px; padding: 4px 8px; width: 220px; border: 1px solid #ccc; border-radius: 4px;">
+        <input type="color" id="input-color" value="#ff007f"
+            style="width: 60px; height: 32px; border: 1px solid #ccc; border-radius: 4px; padding: 2px; cursor: pointer; vertical-align: bottom; margin-left: 5px;">
+        <button onclick="changeTextAndColor()"
+            style="font-size: 16px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; vertical-align: bottom; margin-left: 5px;">Click</button>
+    </div>
+
+    <script>
+        function changeTextAndColor() {
+            const textVal = document.getElementById('input-text').value;
+            const colorVal = document.getElementById('input-color').value;
+            const displayEl = document.getElementById('display-text');
+            displayEl.textContent = textVal;
+            displayEl.style.color = colorVal;
+        }
+    </script>
+    <br>
+    <br>
+    <h2>ข้อ 3.</h2>
+    <div style="margin-top: 15px;">
+        <div id="counter-value"
+            style="font-size: 32px; font-weight: bold; margin-bottom: 15px; font-family: serif; padding-left: 5px;">0
+        </div>
+        <button onclick="changeCount(1)"
+            style="font-size: 16px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">Count
+            Up</button>
+        <button onclick="changeCount(-1)"
+            style="font-size: 16px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; margin-left: 5px;">Count
+            Down</button>
+    </div>
+
+    <script>
+        function changeCount(amount) {
+            const counterEl = document.getElementById('counter-value');
+            let currentVal = parseInt(counterEl.textContent) || 0;
+            counterEl.textContent = currentVal + amount;
+        }
+    </script>
+    <br>
+    <br>
+    <h2>ข้อ 4.</h2>
+    <div style="margin-top: 15px;">
+        <span style="font-size: 20px; font-family: serif; margin-right: 5px;">Message:</span>
+        <input type="text" id="input-message"
+            style="font-size: 18px; padding: 4px 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+        <button onclick="addMessage()"
+            style="font-size: 16px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; vertical-align: bottom; margin-left: 5px;">Click</button>
+
+        <div id="message-container" style="margin-top: 20px; font-size: 20px; font-family: serif; line-height: 1.8;">
+        </div>
+    </div>
+
+    <script>
+        /*
+        // แบบไม่ใช้ Array
+        function addMessage() {
+            const inputEl = document.getElementById('input-message');
+            const containerEl = document.getElementById('message-container');
+            const text = inputEl.value;
+
+            if (text.trim() !== "") {
+                const newDiv = document.createElement('div');
+                newDiv.textContent = text;
+                containerEl.appendChild(newDiv);
+                inputEl.value = ""; // เคลียร์ช่อง input หลังจากกดเพิ่มข้อความ
+            }
+        }
+        */
+
+        // แบบใช้ Array
+        const messageList = [];
+        let currentIndex = 0; // ข้อ 5
+
+        function addMessage() {
+            const inputEl = document.getElementById('input-message');
+            const containerEl = document.getElementById('message-container');
+            const text = inputEl.value.trim();
+
+            if (text !== "") {
+                messageList.push(text);
+
+                containerEl.innerHTML = "";
+
+                messageList.forEach(function (item) {
+                    const newDiv = document.createElement('div');
+                    newDiv.textContent = item;
+                    containerEl.appendChild(newDiv);
+                });
+
+                inputEl.value = "";
+
+                // ข้อ 5
+                currentIndex = 0;
+                updateCarousel();
+            }
+        }
+
+        function updateCarousel() {
+            const displayEl = document.getElementById('carousel-display');
+            if (messageList.length === 0) {
+                displayEl.textContent = "-";
+            } else {
+                displayEl.textContent = messageList[currentIndex];
+            }
+        }
+
+        function nextMessage() {
+            if (messageList.length === 0) return;
+            currentIndex = (currentIndex + 1) % messageList.length;
+            updateCarousel();
+        }
+
+        function prevMessage() {
+            if (messageList.length === 0) return;
+            currentIndex = (currentIndex - 1 + messageList.length) % messageList.length;
+            updateCarousel();
+        }
+    </script>
+    <br>
+    <br>
+    <h2>ข้อ 5.</h2>
+    <div style="margin-top: 15px;">
+        <button onclick="prevMessage()"
+            style="font-size: 16px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; vertical-align: middle;">Previous</button>
+        <span id="carousel-display"
+            style="font-size: 20px; font-family: serif; margin: 0 15px; vertical-align: middle; font-weight: bold;">-</span>
+        <button onclick="nextMessage()"
+            style="font-size: 16px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; vertical-align: middle;">Next</button>
+    </div>
+    <br>
+    <br>
+    <h2>ข้อ 6.</h2>
+    <div style="margin-top: 15px; font-family: serif;">
+        <div id="owner-info" style="font-size: 24px; font-weight: bold; margin-bottom: 10px;"></div>
+        <div id="cars-list"></div>
+    </div>
+
+    <script>
+        const myObj = {
+            name: "John",
+            age: 30,
+            cars: [
+                { name: "Ford", models: ["Fiesta", "Focus", "Mustang"] },
+                { name: "BMW", models: ["320", "X3", "X5"] },
+                { name: "Fiat", models: ["500", "Panda"] }
+            ]
+        };
+
+        // 1. แสดงข้อมูลผู้เป็นเจ้าของ (Owner)
+        document.getElementById('owner-info').textContent = `Owner : ${myObj.name} (${myObj.age})`;
+
+        // 2. สร้างรายการแบรนด์รถและรุ่นต่างๆ (Nested List)
+        const carsContainer = document.getElementById('cars-list');
+        const mainUl = document.createElement('ul');
+        mainUl.style.paddingLeft = '20px';
+        mainUl.style.fontSize = '20px';
+        mainUl.style.lineHeight = '1.8';
+
+        myObj.cars.forEach(function (car) {
+            // สร้างหัวข้อแบรนด์รถ (Bullet list)
+            const brandLi = document.createElement('li');
+            brandLi.textContent = car.name;
+
+            // สร้างรายการรุ่นรถ (Numbered list)
+            const modelOl = document.createElement('ol');
+            modelOl.style.paddingLeft = '30px';
+
+            car.models.forEach(function (model) {
+                const modelLi = document.createElement('li');
+                modelLi.textContent = model;
+                modelOl.appendChild(modelLi);
+            });
+
+            // เอาตัวเลือกรุ่นใส่ในแบรนด์รถ และเอาแบรนด์ใส่ในรายการหลัก
+            brandLi.appendChild(modelOl);
+            mainUl.appendChild(brandLi);
+        });
+
+        // นำรายการทั้งหมดใส่ใน container
+        carsContainer.appendChild(mainUl);
+    </script>
+</body>
+
+</html>
