@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+</head>
+
+<body>
+    <header>
+        <h1>ออเดอร์</h1>
+        <hr>
+        <p>รายการการสั่งซื้อสินค้า</p>
+    </header>
+
+    <main>
+        <form method="post" action="submit_order.php">
+            <fieldset>
+                <legend>Choose menu</legend>
+                <div class="menu-row">
+                    <div class="menu-title">
+                        <input type="checkbox" id="carrotcake" name="item_carrotcake" value="yes">
+                        <label for="carrotcake">Carrot cake 50 B</label>
+                    </div>
+                    <div class="menu-inputs">
+                        <label for="qty_carrotcake">Quantity</label>
+                        <input type="number" id="qty_carrotcake" name="qty_carrotcake" min="0" max="10" step="1">
+                    </div>
+                    <div>
+                        <label for="note_carrotcake">Note</label>
+                        <input type="text" id="note_carrotcake" name="note_carrotcake">
+                    </div>
+                </div>
+
+            </fieldset>
+            <fieldset>
+                <legend>Information</legend>
+                <div class="menu-row">
+                    <div class="menu-title">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="menu-inputs">
+                        <input type="text" id="name" name="name">
+                    </div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-title">
+                        <label for="telephone">Telephone</label>
+                    </div>
+                    <div class="menu-inputs">
+                        <input type="text" id="telephone" name="telephone">
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="button-group">
+                <input type="submit" value="Submit order">
+                <input type="reset" value="Cancel">
+
+            </div>
+        </form>
+    </main>
+
+</body>
+
+</html>

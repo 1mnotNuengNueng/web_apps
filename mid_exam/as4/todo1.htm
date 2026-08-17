@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: aliceblue;
+        }
+
+        .card {
+            background-color: greenyellow;
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            width: 300px;
+            margin: 100px auto;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .card h1 {
+            color: black;
+            font-weight: 800;
+            font-size: 30px;
+            width: 100%;
+            text-align: center;
+            height: fit-content;
+            padding: 10px
+        }
+
+        .card-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px
+        }
+
+        .card-topic {
+            font-weight: bold;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .card input[type="text"] {
+            border: none;
+            border-bottom: 1px solid black;
+            align-self: center;
+            width: 90%;
+            margin: 10px;
+            background-color: transparent;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .card textarea {
+            border: none;
+            border-bottom: 1px solid black;
+            align-self: center;
+            width: 90%;
+            margin: 10px;
+            background-color: transparent;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .card input[type="submit"] {
+            padding: 10px;
+            width: fit-content;
+            margin: 10px 0 20px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Contact</h1>
+        <div class="card-checkbox-group">
+            <input type="radio" name="topic" id="hi">
+            <label for="hi">Say Hi</label>
+            <input type="radio" name="topic" id="quote">
+            <label for="quote">Get a Quote</label>
+        </div>
+        <div class="card-topic">Name</div>
+        <input type="text">
+        <div class="card-topic">Email</div>
+        <input type="text">
+        <div class="card-topic">Message</div>
+        <textarea></textarea>
+        <input type="submit" value="send">
+    </div>
+
+</body>
+
+</html>

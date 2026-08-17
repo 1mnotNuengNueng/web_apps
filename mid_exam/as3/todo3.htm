@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: aliceblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .feed-container {
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            height: 700px;
+            background-color: white;
+            border: none;
+            border-radius: 10px;
+            margin: 50px auto;
+            padding: 10px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        .feed-header {
+            height: 7%;
+            width: 100%;
+            background-color: rgb(135, 126, 255);
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .feed-header img {
+            width: 30px;
+            height: 30px;
+            align-items: flex-start;
+            border-radius: 10px;
+            margin: 10px 0 20px 10px;
+        }
+
+        .feed-header-info {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-items: flex-start;
+            align-items: flex-start;
+        }
+
+        .feed-header-name {
+            font-size: 15px;
+            font-weight: bold;
+            margin: 10px 0 3px 10px;
+        }
+
+        .feed-header-subtitle {
+            font-size: 13px;
+            color: gray;
+            margin: 0 0 10px 10px;
+        }
+
+        .feed-header-menu {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            margin: 10px;
+        }
+
+        .feed-content {
+            font-size: 15px;
+            color: black;
+            margin: 10px;
+            height: fit-content;
+
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .feed-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .feed-content-info {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            flex-direction: row;
+            border: 1px solid gray;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            align-items: center;
+        }
+
+        .feed-content-info-item {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            padding: 10px 10px 10px 10px;
+            flex: 1;
+        }
+
+        .feed-content-info-web {
+            font-size: 13px;
+            color: gray;
+            margin-bottom: 10px;
+        }
+
+        .feed-content-info-description {
+            font-size: 15px;
+            color: black;
+            margin-bottom: 10px;
+
+        }
+
+        .feed-content-info-detail {
+            font-size: 13px;
+            color: gray;
+        }
+
+        .feed-content-info-more {
+            font-size: 13px;
+            color: gray;
+            padding: 10px;
+            background-color: blue;
+            width: fit-content;
+            height: fit-content;
+            margin: 10px;
+            align-self: center;
+        }
+
+        .feed-footer {
+            display: flex;
+            width: 100%;
+            height: fit-content;
+            margin-top: 10px;
+            background-color: aquamarine;
+            flex-direction: column;
+            justify-items: space-between;
+        }
+
+        .feed-footer-reaction {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .feed-footer-reaction-like {
+            flex: 1;
+            border: 1px solid gray;
+            text-align: flex-start;
+            padding: 5px;
+        }
+
+        .feed-footer-reaction-share {
+            width: fit-content;
+            border: 1px solid gray;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .feed-footer-reaction-comment {
+            width: fit-content;
+            border: 1px solid gray;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .feed-footer-action {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="feed-container">
+        <div class="feed-header">
+            <img src="img/profile.png">
+            <div class="feed-header-info">
+                <div class="feed-header-name">Ake</div>
+                <div class="feed-header-subtitle">Public</div>
+            </div>
+            <div class="feed-header-menu">---</div>
+            <div class="feed-header-menu">X</div>
+        </div>
+        <div class="feed-content">
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        </div>
+        <img src="img/GettyImages-2280565336.jpg">
+        <div class="feed-content-info">
+            <div class="feed-content-info-item">
+                <div class="feed-content-info-web">www.gg.com</div>
+                <div class="feed-content-info-description">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quisquam,
+                    quod.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</div>
+                <div class="feed-content-info-detail">Read more</div>
+            </div>
+            <div class="feed-content-info-more">More</div>
+        </div>
+        <div class="feed-footer">
+            <div class="feed-footer-reaction">
+                <div class="feed-footer-reaction-like">2.4k Like</div>
+                <div class="feed-footer-reaction-share">1.2k Share</div>
+                <div class="feed-footer-reaction-comment">582 Comment</div>
+            </div>
+            <div class="feed-footer-action">
+                <div class="feed-footer-action-like">Like</div>
+                <div class="feed-footer-action-share">Share</div>
+                <div class="feed-footer-action-comment">Comment</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitename</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: aliceblue;
+        }
+
+        .hero {
+            background-color: blueviolet;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        nav {
+            background-color: #71f8ff;
+            min-height: 50px;
+            width: 90%;
+            position: absolute;
+            z-index: 10;
+            top: 0;
+        }
+
+        nav .group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .menu {
+            display: flex;
+            flex-direction: row;
+        }
+
+        nav .logo {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        nav .menu-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: absolute;
+            z-index: 10;
+            left: 10%;
+        }
+
+        .here-title {
+            font-size: 60px;
+            font-weight: bold;
+            color: rgb(255, 0, 0);
+        }
+
+        .hero-subtitle {
+            font-size: 30px;
+            color: #71f8ff;
+        }
+
+        .hero-btn {
+            background-color: #71f8ff;
+            border-radius: 5px;
+            color: red;
+            display: flex;
+            align-items: center;
+            width: fit-content;
+            overflow: hidden;
+        }
+
+        .hero-btn .logo {
+            background-color: orange;
+            padding: 10px 10px;
+            text-align: center;
+            display: flex;
+        }
+
+        .hero-btn .text {
+            display: flex;
+            width: 70%;
+            padding: 10px 15px;
+        }
+
+        .group-card {
+            width: 100%;
+            margin: 10px;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 10px;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+
+            min-height: 200px;
+            width: 200px;
+            background-color: #4f4f4f;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <nav>
+            <div class="group">
+                <div class="logo">logo</div>
+                <div class="menu">
+                    <div class="menu-item">menu1</div>
+                    <div class="menu-item">menu2</div>
+                    <div class="menu-item">menu3</div>
+                </div>
+            </div>
+        </nav>
+        <img src="img/high-resolutionl.jpg" class="hero-img">
+        <div class="hero-content">
+            <h1 class="here-title">Title</h1>
+            <p class="hero-subtitle">Lorem ipsum dolor sit amet.</p>
+            <div class="hero-btn">
+                <div class="logo">logo</div>
+                <div class="text">SMT</div>
+            </div>
+        </div>
+    </div>
+    <div class="group-card">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+
+</body>
+
+</html>
