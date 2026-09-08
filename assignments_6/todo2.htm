@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #fafafa;
+        }
+
+        .counter-container {
+            text-align: center;
+            background: white;
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #counter-value {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-decrease {
+            background-color: #d93838; /* Red */
+            padding: 10px 25px;
+        }
+
+        .btn-reset {
+            background-color: #6c757d; /* Grey */
+            padding: 10px 30px;
+        }
+
+        .btn-increase {
+            background-color: #218c53; /* Green */
+            padding: 10px 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="counter-container">
+        <h1>Counter</h1>
+        <div id="counter-value">0</div>
+        
+        <div class="buttons">
+            <button class="btn-decrease" onclick="decrease()">-</button>
+            <button class="btn-reset" onclick="reset()">Reset</button>
+            <button class="btn-increase" onclick="increase()">+</button>
+        </div>
+    </div>
+
+    <script>
+        let count = 0;
+        const valueElement = document.getElementById('counter-value');
+
+        function updateDisplay() {
+            valueElement.innerText = count;
+            
+            // Change color based on value
+            if (count > 0) {
+                valueElement.style.color = '#008000'; // Green
+            } else if (count < 0) {
+                valueElement.style.color = '#ff0000'; // Red
+            } else {
+                valueElement.style.color = '#000000'; // Black
+            }
+        }
+
+        function increase() {
+            count++;
+            updateDisplay();
+        }
+
+        function decrease() {
+            count--;
+            updateDisplay();
+        }
+
+        function reset() {
+            count = 0;
+            updateDisplay();
+        }
+
+        // Initialize
+        updateDisplay();
+    </script>
+</body>
+</html>

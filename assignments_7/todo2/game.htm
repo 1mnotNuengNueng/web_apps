@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anagram Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            width: 450px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .slots-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            min-height: 70px;
+        }
+        .slot {
+            width: 60px;
+            height: 60px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .letters-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            min-height: 70px;
+            background-color: #eef;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .letter {
+            width: 60px;
+            height: 60px;
+            background-color: #5ab1bb;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            cursor: grab;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .letter:active {
+            cursor: grabbing;
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #7d8b5a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .nav-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #555;
+            text-decoration: none;
+            display: inline-block;
+        }
+        #result-msg {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="game-container">
+        <div class="header">
+            <span id="score-display">Score: 0 / 5</span>
+            <span id="time-display">Time: 15s</span>
+        </div>
+        
+        <div class="slots-container" id="slots-area">
+            <!-- Slots go here -->
+        </div>
+
+        <div class="letters-container" id="letters-area" ondrop="dropToArea(event)" ondragover="allowDrop(event)">
+            <!-- Letters go here -->
+        </div>
+
+        <button class="btn" onclick="initGame()" id="reset-btn">Reset</button>
+        <div id="result-msg"></div>
+    </div>
+    
+    <a href="words.htm" class="nav-btn"><- Back to Manage Words</a>
+
+    <script>
+        let vocabList = [];
+        let gameWords = [];
+        let currentWordIndex = 0;
+        let score = 0;
+        let currentWord = '';
+        let timer;
+        let timeLeft = 15;
+        const maxRounds = 5;
+
+        function loadWords() {
+            vocabList = JSON.parse(localStorage.getItem('vocabList')) || ['cat', 'dog', 'act', 'bat', 'rat'];
+        }
+
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function initGame() {
+            loadWords();
+            if (vocabList.length === 0) {
+                alert("Please add some words first!");
+                return;
+            }
+            
+            // Pick random words
+            let shuffledVocab = shuffleArray(vocabList);
+            gameWords = shuffledVocab.slice(0, Math.min(maxRounds, shuffledVocab.length));
+            
+            currentWordIndex = 0;
+            score = 0;
+            document.getElementById('result-msg').innerText = '';
+            document.getElementById('reset-btn').style.display = 'none';
+            
+            startRound();
+        }
+
+        function startRound() {
+            if (currentWordIndex >= gameWords.length || currentWordIndex >= maxRounds) {
+                endGame();
+                return;
+            }
+
+            currentWord = gameWords[currentWordIndex];
+            timeLeft = 15;
+            updateUI();
+            
+            // Create slots
+            const slotsArea = document.getElementById('slots-area');
+            slotsArea.innerHTML = '';
+            for (let i = 0; i < currentWord.length; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'slot';
+                slot.setAttribute('ondrop', 'drop(event)');
+                slot.setAttribute('ondragover', 'allowDrop(event)');
+                slotsArea.appendChild(slot);
+            }
+
+            // Create letters
+            const lettersArea = document.getElementById('letters-area');
+            lettersArea.innerHTML = '';
+            let shuffledLetters = shuffleArray(currentWord.split(''));
+            
+            // Ensure it's not the same as original if length > 1
+            if (currentWord.length > 1) {
+                while (shuffledLetters.join('') === currentWord) {
+                    shuffledLetters = shuffleArray(currentWord.split(''));
+                }
+            }
+
+            shuffledLetters.forEach((letter, index) => {
+                const div = document.createElement('div');
+                div.className = 'letter';
+                div.id = 'letter-' + index;
+                div.draggable = true;
+                div.setAttribute('ondragstart', 'drag(event)');
+                div.innerText = letter.toUpperCase();
+                lettersArea.appendChild(div);
+            });
+
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time-display').innerText = `Time: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        alert("Time's up! The word was: " + currentWord);
+                        currentWordIndex++;
+                        startRound();
+                    }, 100);
+                }
+            }, 1000);
+        }
+
+        function updateUI() {
+            document.getElementById('score-display').innerText = `Score: ${score} / ${Math.min(maxRounds, gameWords.length)}`;
+            document.getElementById('time-display').innerText = `Time: ${timeLeft}s`;
+        }
+
+        function endGame() {
+            clearInterval(timer);
+            document.getElementById('slots-area').innerHTML = '';
+            document.getElementById('letters-area').innerHTML = '';
+            document.getElementById('time-display').innerText = '';
+            document.getElementById('result-msg').innerText = `Game Over! Final Score: ${score} / ${Math.min(maxRounds, gameWords.length)}`;
+            document.getElementById('reset-btn').style.display = 'inline-block';
+        }
+
+        // Drag and Drop Logic
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var draggedEl = document.getElementById(data);
+            
+            // If dropping on an empty slot
+            if (ev.target.classList.contains('slot') && ev.target.children.length === 0) {
+                ev.target.appendChild(draggedEl);
+                checkCompletion();
+            } 
+            // If dropping back to letters area
+            else if (ev.target.id === 'letters-area') {
+                ev.target.appendChild(draggedEl);
+            }
+        }
+
+        function dropToArea(ev) {
+            ev.preventDefault();
+            if (ev.target.id === 'letters-area') {
+                var data = ev.dataTransfer.getData("text");
+                ev.target.appendChild(document.getElementById(data));
+            }
+        }
+
+        function checkCompletion() {
+            const slots = document.querySelectorAll('.slot');
+            let assembledWord = '';
+            let isFull = true;
+
+            slots.forEach(slot => {
+                if (slot.children.length > 0) {
+                    assembledWord += slot.children[0].innerText.toLowerCase();
+                } else {
+                    isFull = false;
+                }
+            });
+
+            if (isFull) {
+                if (assembledWord === currentWord) {
+                    clearInterval(timer);
+                    score++;
+                    updateUI();
+                    setTimeout(() => {
+                        alert("Correct!");
+                        currentWordIndex++;
+                        startRound();
+                    }, 100);
+                } else {
+                    // Automatically return letters if wrong (optional, or just let them fix it)
+                    // Currently, they can drag them back manually.
+                }
+            }
+        }
+
+        // Start game on load
+        window.onload = initGame;
+    </script>
+</body>
+</html>

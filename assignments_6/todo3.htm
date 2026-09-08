@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastel Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #008eff;
+      /* Bright blue background matching mockup */
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Calculator Outer Card */
+    .calculator-card {
+      background: #ffffff;
+      width: 380px;
+      padding: 24px;
+      border-radius: 28px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Calculator Display Screen */
+    .calculator-screen {
+      background-color: #f6f6f6;
+      width: 100%;
+      height: 72px;
+      border-radius: 16px;
+      border: none;
+      padding: 0 20px;
+      font-size: 32px;
+      font-weight: 700;
+      color: #333333;
+      text-align: right;
+      outline: none;
+      /* Box shadow to match the indent style */
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Grid layout for buttons */
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Base Button Styles */
+    .calc-btn {
+      height: 68px;
+      border: none;
+      border-radius: 16px;
+      font-size: 24px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.1s ease;
+      user-select: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Pastel Orange/Yellow Buttons (+ - × ÷) */
+    .btn-operator {
+      background-color: #ffcc5c;
+      color: #333333;
+    }
+
+    .btn-operator:hover {
+      background-color: #f2bf50;
+    }
+
+    /* Pastel Blue Buttons (Digits & Decimals) */
+    .btn-digit {
+      background-color: #c5e3f9;
+      color: #333333;
+    }
+
+    .btn-digit:hover {
+      background-color: #b5d5ed;
+    }
+
+    /* Red Clear Button (C) */
+    .btn-clear {
+      background-color: #f75c46;
+      color: #ffffff;
+    }
+
+    .btn-clear:hover {
+      background-color: #e34c37;
+    }
+
+    /* Green Equals Button (=) */
+    .btn-equals {
+      background-color: #0ed196;
+      color: #ffffff;
+      grid-column: span 2;
+      /* Spans two columns as shown in mockup */
+    }
+
+    .btn-equals:hover {
+      background-color: #0cb883;
+    }
+
+    /* Press Animation Effect */
+    .calc-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="calculator-card">
+    <!-- Calculator Display Screen -->
+    <input type="text" class="calculator-screen" id="screen" readonly value="8.3 + 1.7">
+
+    <!-- Buttons Panel Grid -->
+    <div class="buttons-grid">
+      <!-- Row 1: Operators -->
+      <button class="calc-btn btn-operator" onclick="pressOperator('+')">+</button>
+      <button class="calc-btn btn-operator" onclick="pressOperator('-')">−</button>
+      <button class="calc-btn btn-operator" onclick="pressOperator('×')">×</button>
+      <button class="calc-btn btn-operator" onclick="pressOperator('÷')">÷</button>
+
+      <!-- Row 2: Digits 7, 8, 9, 4 -->
+      <button class="calc-btn btn-digit" onclick="pressDigit('7')">7</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('8')">8</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('9')">9</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('4')">4</button>
+
+      <!-- Row 3: Digits 5, 6, 1, 2 -->
+      <button class="calc-btn btn-digit" onclick="pressDigit('5')">5</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('6')">6</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('1')">1</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('2')">2</button>
+
+      <!-- Row 4: Digits 3, 0, . and Clear -->
+      <button class="calc-btn btn-digit" onclick="pressDigit('3')">3</button>
+      <button class="calc-btn btn-digit" onclick="pressDigit('0')">0</button>
+      <button class="calc-btn btn-digit" onclick="pressDecimal('.')">.</button>
+      <button class="calc-btn btn-clear" onclick="clearScreen()">C</button>
+
+      <!-- Row 5: Equals Button (Spans 2 columns, other 2 columns remain empty) -->
+      <button class="calc-btn btn-equals" onclick="calculateResult()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const screen = document.getElementById('screen');
+    let currentExpression = '';
+
+    // Initialize screen
+    window.onload = () => {
+      screen.value = '';
+    };
+
+    function updateScreen() {
+      screen.value = currentExpression;
+    }
+
+    function pressDigit(digit) {
+      if (screen.value === 'Error') clearScreen();
+      currentExpression += digit;
+      updateScreen();
+    }
+
+    function pressOperator(op) {
+      if (screen.value === 'Error') clearScreen();
+      
+      // Don't add multiple operators in a row
+      const lastChar = currentExpression.trim().slice(-1);
+      if (['+', '−', '×', '÷'].includes(lastChar)) {
+        currentExpression = currentExpression.trim().slice(0, -1) + ' ' + op + ' ';
+      } else {
+        currentExpression += ' ' + op + ' ';
+      }
+      
+      updateScreen();
+    }
+
+    function pressDecimal(dot) {
+      if (screen.value === 'Error') clearScreen();
+      currentExpression += dot;
+      updateScreen();
+    }
+
+    function clearScreen() {
+      currentExpression = '';
+      updateScreen();
+    }
+
+    function calculateResult() {
+      if (!currentExpression) return;
+      
+      try {
+        // Convert visual operators to valid JS math operators
+        let evalExpression = currentExpression
+          .replace(/×/g, '*')
+          .replace(/÷/g, '/')
+          .replace(/−/g, '-');
+          
+        let result = new Function('return ' + evalExpression)();
+        
+        // Handle floating point precision
+        result = Math.round(result * 100000000) / 100000000;
+        
+        currentExpression = result.toString();
+        updateScreen();
+      } catch (e) {
+        screen.value = 'Error';
+        currentExpression = '';
+      }
+    }
+  </script>
+</body>
+</html>

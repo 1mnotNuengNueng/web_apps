@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .container {
+            background-color: #5ab1bb;
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+        }
+
+        .option-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .option {
+            background-color: white;
+            border-radius: 15px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .vote-count {
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #999;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: black;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Vote<br>Result</h2>
+        <div class="options">
+            <div class="option-container">
+                <div class="option">🍔</div>
+                <div class="vote-count" id="count-burger">0</div>
+            </div>
+            <div class="option-container">
+                <div class="option">🍕</div>
+                <div class="vote-count" id="count-pizza">0</div>
+            </div>
+            <div class="option-container">
+                <div class="option">🌭</div>
+                <div class="vote-count" id="count-hotdog">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="#" onclick="goToVote()" class="btn">Back to Vote</a>
+        <button class="btn" onclick="clearVotes()">Clear Vote</button>
+    </div>
+
+    <script>
+        // Check for URL parameters first
+        let urlParams = new URLSearchParams(window.location.search);
+        ['burger', 'pizza', 'hotdog'].forEach(item => {
+            let val = urlParams.get(item);
+            if (val !== null) localStorage.setItem('vote_' + item, val);
+        });
+
+        function getVote(item) {
+            return parseInt(localStorage.getItem('vote_' + item)) || 0;
+        }
+
+        function updateDisplay() {
+            document.getElementById('count-burger').innerText = getVote('burger');
+            document.getElementById('count-pizza').innerText = getVote('pizza');
+            document.getElementById('count-hotdog').innerText = getVote('hotdog');
+        }
+
+        function clearVotes() {
+            localStorage.setItem('vote_burger', 0);
+            localStorage.setItem('vote_pizza', 0);
+            localStorage.setItem('vote_hotdog', 0);
+            updateDisplay();
+        }
+
+        function goToVote() {
+            let b = getVote('burger');
+            let p = getVote('pizza');
+            let h = getVote('hotdog');
+            window.location.href = `vote.htm?burger=${b}&pizza=${p}&hotdog=${h}`;
+        }
+
+        // Initialize display on load
+        window.onload = updateDisplay;
+    </script>
+</body>
+
+</html>

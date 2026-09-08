@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #9ef01a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .app-container {
+            background-color: #9ef01a; /* Bright lime green */
+            padding: 40px;
+            width: 450px;
+        }
+
+        .todo-card {
+            background-color: #fffb00; /* Yellow */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .input-area {
+            background-color: white;
+            padding: 20px;
+            border-bottom: 2px dotted #d1ce00;
+        }
+
+        #task-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1.2rem;
+            color: #333;
+            font-family: inherit;
+        }
+        
+        #task-input::placeholder {
+            color: #d3d3d3;
+            font-weight: 500;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 2px dotted #d1ce00;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #000;
+        }
+
+        /* Remove border from last item */
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Completed task style */
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #aaa;
+            font-weight: 500;
+        }
+        
+        .task-item.completed .check-btn {
+            background-color: #ccc;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            border: none;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: transform 0.1s;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.9);
+        }
+
+        .check-btn {
+            background-color: #00a82d; /* Green */
+        }
+
+        .delete-btn {
+            background-color: #ff0000; /* Red */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="todo-card">
+            <div class="input-area">
+                <input type="text" id="task-input" placeholder="Enter your task">
+            </div>
+            <ul class="task-list" id="task-list">
+                <!-- Tasks will be appended here using DOM nodes -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById('task-input');
+        const taskList = document.getElementById('task-list');
+
+        // Add task when pressing Enter key
+        taskInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const taskText = taskInput.value.trim();
+                if (taskText !== '') {
+                    addTask(taskText);
+                    taskInput.value = ''; // Clear input field
+                }
+            }
+        });
+
+        // Function to create and add task using DOM nodes (createElement, appendChild)
+        function addTask(text) {
+            // 1. Create <li> element for the task item
+            const li = document.createElement('li');
+            li.classList.add('task-item');
+
+            // 2. Create <span> element for the task text
+            const span = document.createElement('span');
+            span.classList.add('task-text');
+            span.textContent = text;
+
+            // 3. Create <div> element to hold the buttons
+            const actionsDiv = document.createElement('div');
+            actionsDiv.classList.add('actions');
+
+            // 4. Create Check button (Green)
+            const checkBtn = document.createElement('button');
+            checkBtn.classList.add('action-btn', 'check-btn');
+            checkBtn.innerHTML = '✔';
+            
+            // Event listener for Check button
+            checkBtn.onclick = function() {
+                li.classList.toggle('completed'); // Toggle 'completed' class
+            };
+
+            // 5. Create Delete button (Red)
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('action-btn', 'delete-btn');
+            // Using a simple trash can emoji or 'x', here we use a small icon-like text
+            deleteBtn.innerHTML = '🗑'; 
+            
+            // Event listener for Delete button
+            deleteBtn.onclick = function() {
+                // Using Node.removeChild to delete the task from the list
+                taskList.removeChild(li);
+            };
+
+            // 6. Append buttons to the actions <div>
+            actionsDiv.appendChild(checkBtn);
+            actionsDiv.appendChild(deleteBtn);
+
+            // 7. Append span and actions <div> to the <li>
+            li.appendChild(span);
+            li.appendChild(actionsDiv);
+
+            // 8. Append the completed <li> to the <ul> (task list)
+            taskList.appendChild(li);
+        }
+        
+        // Add initial tasks just like in the mockup image
+        addTask('todo 1');
+        addTask('todo 2');
+        addTask('todo 3');
+    </script>
+</body>
+</html>

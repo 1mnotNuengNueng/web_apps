@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments 7</title>
+    <!-- Google Fonts for modern & premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', 'Sarabun', 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /* Profile Section (Header) */
+        .profile-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .student-title {
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .student-name {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .student-id {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            align-self: flex-start;
+            margin-top: 10px;
+            color: var(--text-main);
+            position: relative;
+            padding-left: 15px;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Assignments Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 24px;
+            width: 100%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Custom Assignment Cards */
+        .task-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .task-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .task-icon {
+            font-size: 24px;
+        }
+
+        .task-body {
+            flex-grow: 1;
+            margin-bottom: 24px;
+        }
+
+        .task-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .task-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Button Link */
+        .task-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .task-card:hover .task-link {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Footer Copyright */
+        footer {
+            margin-top: 60px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 600px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Profile Header -->
+        <header class="profile-card">
+            <div class="profile-avatar">🎓</div>
+            <div class="profile-info">
+                <span class="student-title">Web Application</span>
+                <h1 class="student-name">นายธนากร แซ่ลิ้ม</h1>
+                <span class="student-id">รหัสนิสิต: 6620503420</span>
+            </div>
+        </header>
+
+        <!-- Assignments Section -->
+        <h2 class="section-title">Assignments 7 Projects</h2>
+
+        <main class="grid">
+            <!-- Task 1 Card -->
+            <article class="task-card">
+                <div>
+                    <div class="task-header">
+                        <span class="task-badge">Task 01</span>
+                        <span class="task-icon">🗳️</span>
+                    </div>
+                    <div class="task-body">
+                        <h3 class="task-title">Todo 1</h3>
+                    </div>
+                </div>
+                <a href="./todo1/vote.htm" class="task-link">
+                    เปิดชิ้นงาน 1 <span>&rarr;</span>
+                </a>
+            </article>
+
+            <!-- Task 2 Card -->
+            <article class="task-card">
+                <div>
+                    <div class="task-header">
+                        <span class="task-badge">Task 02</span>
+                        <span class="task-icon">🧩</span>
+                    </div>
+                    <div class="task-body">
+                        <h3 class="task-title">Todo 2</h3>
+                    </div>
+                </div>
+                <a href="./todo2/words.htm" class="task-link">
+                    เปิดชิ้นงาน 2 <span>&rarr;</span>
+                </a>
+            </article>
+
+            <!-- Task 3 Card -->
+            <article class="task-card">
+                <div>
+                    <div class="task-header">
+                        <span class="task-badge">Task 03</span>
+                        <span class="task-icon">🎴</span>
+                    </div>
+                    <div class="task-body">
+                        <h3 class="task-title">Todo 3</h3>
+                    </div>
+                </div>
+                <a href="./todo3.htm" class="task-link">
+                    เปิดชิ้นงาน 3 <span>&rarr;</span>
+                </a>
+            </article>
+        </main>
+
+    </div>
+</body>
+
+</html>

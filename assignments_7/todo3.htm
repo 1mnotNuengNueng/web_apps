@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมจับคู่</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .title-container {
+            background-color: #dcedc8;
+            padding: 10px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 70px);
+            gap: 10px;
+            background-color: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            width: 70px;
+            height: 70px;
+            background-color: #aed581;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.95);
+        }
+
+        .card.flipped {
+            background-color: #fff;
+            cursor: default;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 10px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            background-color: #798660;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #687452;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-container">
+        เกมจับคู่
+    </div>
+
+    <div class="grid" id="grid">
+        <!-- Cards will be generated here -->
+    </div>
+
+    <button class="btn" onclick="initGame()">Reset</button>
+
+    <script>
+        const fruits = ['🍎', '🍇', '🍍', '🍉', '🍌', '🍓', '🍒', '🥝'];
+        let cards = [];
+        let flippedIndices = [];
+        let matchedCount = 0;
+        let lockBoard = false;
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function initGame() {
+            // Create array with 2 of each fruit and shuffle
+            cards = shuffle([...fruits, ...fruits]);
+            flippedIndices = [];
+            matchedCount = 0;
+            lockBoard = false;
+            renderBoard();
+        }
+
+        function renderBoard() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            cards.forEach((fruit, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = `card-${index}`;
+                card.innerText = '?';
+                card.onclick = () => flipCard(index);
+                grid.appendChild(card);
+            });
+        }
+
+        function flipCard(index) {
+            // Prevent clicking if board is locked, or clicking the same card twice, or clicking a matched card
+            if (lockBoard) return;
+            if (flippedIndices.includes(index)) return;
+            const cardEl = document.getElementById(`card-${index}`);
+            if (cardEl.classList.contains('flipped')) return; // Already flipped/matched
+
+            // Flip the card
+            cardEl.innerText = cards[index];
+            cardEl.classList.add('flipped');
+            flippedIndices.push(index);
+
+            // Check match if 2 cards are flipped
+            if (flippedIndices.length === 2) {
+                lockBoard = true;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [idx1, idx2] = flippedIndices;
+            
+            if (cards[idx1] === cards[idx2]) {
+                // Match! Keep them flipped
+                matchedCount++;
+                flippedIndices = [];
+                lockBoard = false;
+                
+                // Check win condition
+                if (matchedCount === fruits.length) {
+                    setTimeout(() => alert("ยินดีด้วย! คุณจับคู่ครบทั้งหมดแล้ว 🎉"), 500);
+                }
+            } else {
+                // Not a match! Wait 2 seconds then flip back
+                setTimeout(() => {
+                    const card1 = document.getElementById(`card-${idx1}`);
+                    const card2 = document.getElementById(`card-${idx2}`);
+                    
+                    card1.innerText = '?';
+                    card1.classList.remove('flipped');
+                    
+                    card2.innerText = '?';
+                    card2.classList.remove('flipped');
+                    
+                    flippedIndices = [];
+                    lockBoard = false;
+                }, 2000); // 2000 milliseconds = 2 seconds
+            }
+        }
+
+        // Start the game for the first time
+        initGame();
+    </script>
+</body>
+</html>
