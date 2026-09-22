@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neptuny Bakery</title>
+</head>
+
+<body>
+    <h1>ออเดอร์</h1>
+    <hr>
+    <p>รายการการสั่งซื้อสินค้า</p>
+
+    <form method="get" action="submit_order.php" class="order-container">
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="carrotcake" name="item_carrotcake" value="yes">
+                <label for="carrotcake">เค้กแครอท</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_carrotcake">จำนวน</label>
+                <input type="number" id="qty_carrotcake" name="qty_carrotcake" min="0" max="10" step="1">
+
+                <label for="note_carrotcake">หมายเหตุ</label>
+                <input type="text" id="note_carrotcake" name="note_carrotcake">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="matchacake" name="item_matchacake" value="yes">
+                <label for="matchacake">เค้กมัทฉะ</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_matchacake">จำนวน</label>
+                <input type="number" id="qty_matchacake" name="qty_matchacake" min="0" max="10" step="1">
+
+                <label for="note_matchacake">หมายเหตุ</label>
+                <input type="text" id="note_matchacake" name="note_matchacake">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="pumpkincake" name="item_pumpkincake" value="yes">
+                <label for="pumpkincake">เค้กฟักทอง</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_pumpkincake">จำนวน</label>
+                <input type="number" id="qty_pumpkincake" name="qty_pumpkincake" min="0" max="10" step="1">
+
+                <label for="note_pumpkincake">หมายเหตุ</label>
+                <input type="text" id="note_pumpkincake" name="note_pumpkincake">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="carrotlatte" name="item_carrotlatte" value="yes">
+                <label for="carrotlatte">แครอทลาเต้</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_carrotlatte">จำนวน</label>
+                <input type="number" id="qty_carrotlatte" name="qty_carrotlatte" min="0" max="10" step="1">
+
+                <label for="note_carrotlatte">หมายเหตุ</label>
+                <input type="text" id="note_carrotlatte" name="note_carrotlatte">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="matchalatte" name="item_matchalatte" value="yes">
+                <label for="matchalatte">มัทฉะลาเต้</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_matchalatte">จำนวน</label>
+                <input type="number" id="qty_matchalatte" name="qty_matchalatte" min="0" max="10" step="1">
+
+                <label for="note_matchalatte">หมายเหตุ</label>
+                <input type="text" id="note_matchalatte" name="note_matchalatte">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="pumpkinlatte" name="item_pumpkinlatte" value="yes">
+                <label for="pumpkinlatte">ฟักทองลาเต้</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_pumpkinlatte">จำนวน</label>
+                <input type="number" id="qty_pumpkinlatte" name="qty_pumpkinlatte" min="0" max="10" step="1">
+
+                <label for="note_pumpkinlatte">หมายเหตุ</label>
+                <input type="text" id="note_pumpkinlatte" name="note_pumpkinlatte">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="carroticecream" name="item_carroticecream" value="yes">
+                <label for="carroticecream">ไอศกรีมแครอท</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_carroticecream">จำนวน</label>
+                <input type="number" id="qty_carroticecream" name="qty_carroticecream" min="0" max="10" step="1">
+
+                <label for="note_carroticecream">หมายเหตุ</label>
+                <input type="text" id="note_carroticecream" name="note_carroticecream">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="matchaicecream" name="item_matchaicecream" value="yes">
+                <label for="matchaicecream">ไอศกรีมมัทฉะ</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <div class="menu-inputs">
+                <label for="qty_matchaicecream">จำนวน</label>
+                <input type="number" id="qty_matchaicecream" name="qty_matchaicecream" min="0" max="10" step="1">
+
+                <label for="note_matchaicecream">หมายเหตุ</label>
+                <input type="text" id="note_matchaicecream" name="note_matchaicecream">
+            </div>
+        </div>
+        <br>
+
+        <div class="menu-row">
+            <div class="menu-title">
+                <input type="checkbox" id="pumpkinicecream" name="item_pumpkinicecream" value="yes">
+                <label for="pumpkinicecream">ไอศกรีมฟักทอง</label> <span style="color: red;">50 บาท</span>
+            </div>
+            <br>
+            <div class="menu-inputs">
+                <label for="qty_pumpkinicecream">จำนวน</label>
+                <input type="number" id="qty_pumpkinicecream" name="qty_pumpkinicecream" min="0" max="10" step="1">
+
+                <label for="note_pumpkinicecream">หมายเหตุ</label>
+                <input type="text" id="note_pumpkinicecream" name="note_pumpkinicecream">
+            </div>
+        </div>
+
+        <div>
+            <h1>ข้อมูลจัดส่ง</h1>
+            <label for="name">ชื่อ</label>
+            <input type="text" id="name" name="name">
+            <label for="phone">เบอร์โทรศัพท์</label>
+            <input type="text" id="phone" name="phone">
+            <br>
+            <label for="name">วันที่ต้องการรับสินค้า</label>
+            <input type="date" id="date" name="date">
+            <label for="time">เวลาที่ต้องการรับสินค้า</label>
+            <input type="time" id="time" name="time">
+            <br>
+            <label for="address">ที่อยู่</label>
+            <input type="text" id="address" name="address">
+        </div>
+
+        <div class="button-group">
+            <button type="submit">ยืนยัน</button>
+            <button type="button">ยกเลิก</button>
+        </div>
+    </form>
+</body>
+
+</html>
