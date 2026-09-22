@@ -5,21 +5,34 @@
     <meta charset="UTF-8">
     <meta name="description" content="Shopping Online">
     <meta name="keyword" content="bakery, cafe">
-    <meta name="viewport" content="width=device-width, initail-scale=1.0">
-    <title>
-        Neptuny Bakery
-    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neptuny Bakery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
     <style>
         ul {
-            list-style-position: inside;
-            text-align: center;
+            list-style-type: none;
             padding: 0;
             margin: 0;
+            display: flex;
+            justify-content: space-around;
         }
-
         li {
-            margin: 8px 0;
-            list-style-type: disc;
+            margin: 10px;
+        }
+        .main-table {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+        .main-table th {
+            font-size: 1.2em;
+            background-color: transparent;
+            color: #2c3e50;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .main-table td {
+            border: none;
         }
     </style>
 </head>
@@ -30,7 +43,7 @@
         เราตั้งใจอบขนมสดใหม่ทุกวัน ด้วยวัตถุดิบคุณภาพและความใส่ใจในทุกขั้นตอน
         <br>หวังว่าขนมทุกชิ้นจะเติมเต็มความสุขให้กับทุกช่วงเวลาของคุณ 💛🍞✨
     </p>
-    <table border="1" style="border-collapse: collapse; width: 700px;">
+    <table class="main-table">
         <tr>
             <th>ขนม</th>
             <th>ชา</th>
