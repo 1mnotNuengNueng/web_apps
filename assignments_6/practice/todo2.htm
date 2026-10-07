@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COunter</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Counter</h1>
+        <div class="result">0</div>
+
+        <button onclick="decrease()">-</button>
+
+        <button onclick="increase()">+</button>
+        
+        <button onclick="reset()">reset</button>
+
+    </div>
+    <script>
+        let count = 0;
+        const valueElement = document.getElementById('result');
+
+        function updateDisplay() {
+            valueElement.innerText = count;
+
+            if(count > 0){
+                valueElement.style.color = 'green';
+            }else if(count < 0){
+                valueElement.style.color = 'red';
+            }else{
+                valueElement.style.color = 'black';
+            }
+        }
+
+        function increase(){
+            count++;
+            updateDisplay();
+        }
+
+        function decrease(){
+            count--;
+            updateDisplay();
+        }
+
+        function reset(){
+            count = 0;
+            updateDisplay();
+        }
+
+        updateDisplay();
+        
+    </script>
+    
+</body>
+</html>

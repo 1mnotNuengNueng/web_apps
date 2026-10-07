@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vote</title>
+</head>
+
+<body>
+
+    <h1>vote</h1>
+    <div class="container">
+        <div class="options" style="display: flex;">
+            <button class="option" onclick="vote('burger')">Hamburger</button>
+            <button class="option" onclick="vote('pizza')">Pizza</button>
+            <button class="option" onclick="vote('hotdog')">Hotdog</button>
+        </div>
+    </div>
+
+    <a href="#" onclick="goToShowVote()">Show Vote</a>
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        ['burger', 'pizza', 'hotdog'].forEach(item => {
+            let val = urlParams.get(item)
+            if (val !== null) localStorage.setItem('vote_' + item, val);
+        });
+
+        function getVote(item) {
+            return parseInt(localStorage.getItem('vote_' + item)) || 0;
+        }
+
+        function vote(item) {
+            let currentVotes = getVote(item);
+            localStorage.setItem('vote_' + item, currentVotes + 1);
+            console.log(item + 'voted!' + (currentVotes + 1));
+        }
+
+        function goToShowVote() {
+            let b = getVote('burger');
+            let p = getVote('pizza');
+            let h = getVote('hotdog');
+            window.location.href = `showvote.htm?burger=${b}&pizza=${p}&hotdog=${h}`;
+        }
+
+    </script>
+
+</body>
+
+</html>

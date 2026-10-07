@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cal</title>
+</head>
+
+<body>
+    <div class="container" style="display: flex; flex-direction: column;">
+        <h1>Calculator</h1>
+        <input type="text" id="screen">
+        <div class="buttons" style="display: grid;  grid-template-columns: repeat(4,1fr);">
+            <button class="btn" onclick="pressOperator()">+</button>
+            <button class="btn" onclick="pressOperator()">-</button>
+            <button class="btn" onclick="pressOperator()">*</button>
+            <button class="btn" onclick="pressOperator()">/</button>
+
+            <button class="btn" onclick="pressNumber()">1</button>
+            <button class="btn" onclick="pressNumber()">2</button>
+            <button class="btn" onclick="pressNumber()">3</button>
+            <button class="btn" onclick="pressNumber()">4</button>
+            <button class="btn" onclick="pressNumber()">5</button>
+            <button class="btn" onclick="pressNumber()">6</button>
+            <button class="btn" onclick="pressNumber()">7</button>
+            <button class="btn" onclick="pressNumber()">8</button>
+            <button class="btn" onclick="pressNumber()">9</button>
+            <button class="btn" onclick="pressNumber()">0</button>
+            <button class="btn" onclick="pressNumber()">.</button>
+            <button class="btn" onclick="calculateResult()">=</button>
+            <button class="btn" onclick="clearResult()">AC</button>
+            <button class="btn" onclick="clearScreen()">C</button>
+        </div>
+
+
+    </div>
+    <script>
+        const screen = document.getElementById("screen");
+        let currExpression = '';
+
+        window.onload = () =>{
+            screen.value = '';
+        }
+
+        function updateScreen(){
+            screen.value = currExpression;
+        }
+
+        function pressNumber(num){
+            currExpression += num;
+            updateScreen();
+        }
+
+    function pressOperator(op) {
+      if (screen.value === 'Error') clearScreen();
+      
+      // Don't add multiple operators in a row
+      const lastChar = currentExpression.trim().slice(-1);
+      if (['+', '−', '×', '÷'].includes(lastChar)) {
+        currentExpression = currentExpression.trim().slice(0, -1) + ' ' + op + ' ';
+      } else {
+        currentExpression += ' ' + op + ' ';
+      }
+      
+      updateScreen();
+    }
+
+        function clearScreen(){
+            currExpression = '';
+            updateScreen();
+        }
+
+        
+
+        
+    </script>
+
+</body>
+
+</html>

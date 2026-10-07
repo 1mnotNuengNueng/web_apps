@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI cal</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="inner-box">
+            <h1>BMI</h1>
+            <div class="input-row" style="display: flex; flex-direction: row;">
+                <div class="subtitle">H</div>
+                <input type="number" value="160" step="1" id="h">
+            </div>
+            <div class="input-row" style="display: flex; flex-direction: row;">
+                <div class="subtitle">W</div>
+                <input type="number" value="50" step="1" id="w">
+            </div>
+            <button value="submit" onclick="computeBMI()">submit</button>
+            <div id="result">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function computeBMI() {
+            const height = parseFloat(document.getElementById('h').value);
+            const weight = parseFloat(document.getElementById('w').value);
+
+            if (height > 0 && weight > 0) {
+                const heightM = height / 100;
+                const bmi = weight / (heightM * heightM);
+
+                let condition = "";
+                if (bmi < 18.5) {
+                    condition = "under weight";
+                } else if (bmi < 25) {
+                    condition = "normal weight";
+                } else if (bmi < 30) {
+                    condition = "over weight";
+                } else {
+                    condition = "obesity";
+                }
+
+                const resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = `
+                <div> BMI is ${bmi}</div>
+                <div> the condition is ${condition}</div>
+                `
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
