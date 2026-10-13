@@ -2,40 +2,48 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create Types
-  const dessertType = await prisma.type.create({
-    data: { name: 'Dessert' }
-  });
-  
-  const bakeryType = await prisma.type.create({
-    data: { name: 'Bakery' }
-  });
-  
-  const drinkType = await prisma.type.create({
-    data: { name: 'Drink' }
+  console.log('Clearing old menus and types...');
+  await prisma.menu.deleteMany();
+  await prisma.type.deleteMany();
+
+  console.log('Creating bakery types...');
+  const cakeType = await prisma.type.create({
+    data: { name: 'เค้ก' }
   });
 
-  // Create Menus
-  const foods = [
-    { name: "cake", price: 35, isBestSeller: true, typeId: dessertType.typeId },
-    { name: "bread", price: 25, isBestSeller: false, typeId: bakeryType.typeId },
-    { name: "milk", price: 15, isBestSeller: true, typeId: drinkType.typeId },
-    { name: "donut", price: 45, isBestSeller: false, typeId: dessertType.typeId },
-    { name: "cookie", price: 55, isBestSeller: true, typeId: dessertType.typeId },
+  const teaType = await prisma.type.create({
+    data: { name: 'ชา' }
+  });
+
+  const iceCreamType = await prisma.type.create({
+    data: { name: 'ไอศกรีม' }
+  });
+
+  console.log('Creating bakery menus matching Neptuny Bakery website...');
+  const bakeryFoods = [
+    { name: 'เค้กแครอท', price: 50, isBestSeller: true, typeId: cakeType.typeId },
+    { name: 'เค้กมัทฉะ', price: 50, isBestSeller: true, typeId: cakeType.typeId },
+    { name: 'เค้กฟักทอง', price: 50, isBestSeller: false, typeId: cakeType.typeId },
+    { name: 'แครอทลาเต้', price: 50, isBestSeller: false, typeId: teaType.typeId },
+    { name: 'มัทฉะลาเต้', price: 50, isBestSeller: true, typeId: teaType.typeId },
+    { name: 'ฟักทองลาเต้', price: 50, isBestSeller: false, typeId: teaType.typeId },
+    { name: 'ไอศกรีมแครอท', price: 50, isBestSeller: false, typeId: iceCreamType.typeId },
+    { name: 'ไอศกรีมมัทฉะ', price: 50, isBestSeller: true, typeId: iceCreamType.typeId },
+    { name: 'ไอศกรีมฟักทอง', price: 50, isBestSeller: false, typeId: iceCreamType.typeId },
   ];
 
-  for (const food of foods) {
+  for (const food of bakeryFoods) {
     await prisma.menu.create({
       data: food
     });
   }
 
-  console.log('Seed data inserted successfully!');
+  console.log('Seeded 9 Neptuny Bakery menu items successfully!');
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('Error during seeding:', e);
     process.exit(1);
   })
   .finally(async () => {

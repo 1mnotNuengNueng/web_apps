@@ -43,7 +43,7 @@ const FoodForm = ({ addItem, types, isSubmitting }) => {
             type="text"
             id="form-name"
             name="name"
-            placeholder="e.g. matcha roll"
+            placeholder="e.g. เค้กช็อกโกแลต, ครัวซองต์"
             value={inputs.name}
             onChange={handleChange}
             required

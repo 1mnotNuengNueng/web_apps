@@ -186,6 +186,7 @@ function App() {
           <div className="layout-right-view">
             {activeTab === 'home' && (
               <HomeView
+                food={food}
                 onNavigateToMenu={() => setActiveTab('menu')}
                 onNavigateToOrder={() => setActiveTab('order')}
               />
@@ -207,6 +208,7 @@ function App() {
 
             {activeTab === 'order' && (
               <OrderView
+                food={food}
                 onOrderSuccess={(msg) => showToast(msg, 'success')}
               />
             )}

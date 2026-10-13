@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
-const initialOrderItems = [
-  { id: 'carrotcake', name: 'เค้กแครอท', price: 50, img: '/img/carrotcake.jpg' },
-  { id: 'matchacake', name: 'เค้กมัทฉะ', price: 50, img: '/img/matchacake.webp' },
-  { id: 'pumpkincake', name: 'เค้กฟักทอง', price: 50, img: '/img/pumkincake.webp' },
-  { id: 'carrotlatte', name: 'แครอทลาเต้', price: 50, img: '/img/carrotlatte.jpg' },
-  { id: 'matchalatte', name: 'มัทฉะลาเต้', price: 50, img: '/img/matchalatte.jpg' },
-  { id: 'pumpkinlatte', name: 'ฟักทองลาเต้', price: 50, img: '/img/pumpkinlatte.jpg' },
-  { id: 'carroticecream', name: 'ไอศกรีมแครอท', price: 50, img: '/img/carrot-ice-cream.jpg' },
-  { id: 'matchaicecream', name: 'ไอศกรีมมัทฉะ', price: 50, img: '/img/matcha-ice-cream.jpg' },
-  { id: 'pumpkinicecream', name: 'ไอศกรีมฟักทอง', price: 50, img: '/img/pumpkin-ice-cream.jpg' },
-];
+const imageMap = {
+  'เค้กแครอท': '/img/carrotcake.jpg',
+  'เค้กมัทฉะ': '/img/matchacake.webp',
+  'เค้กฟักทอง': '/img/pumkincake.webp',
+  'แครอทลาเต้': '/img/carrotlatte.jpg',
+  'มัทฉะลาเต้': '/img/matchalatte.jpg',
+  'ฟักทองลาเต้': '/img/pumpkinlatte.jpg',
+  'ไอศกรีมแครอท': '/img/carrot-ice-cream.jpg',
+  'ไอศกรีมมัทฉะ': '/img/matcha-ice-cream.jpg',
+  'ไอศกรีมฟักทอง': '/img/pumpkin-ice-cream.jpg',
+};
 
-const OrderView = ({ onOrderSuccess }) => {
-  const [selectedItems, setSelectedItems] = useState({
-    carrotcake: { selected: true, qty: 1, note: 'หวานน้อย' },
-    matchalatte: { selected: true, qty: 1, note: 'แยกน้ำแข็ง' },
-  });
+const OrderView = ({ food, onOrderSuccess }) => {
+  const [selectedItems, setSelectedItems] = useState({});
+
+  const orderCatalog = useMemo(() => {
+    if (!food || food.length === 0) return [];
+    return food.map((item) => ({
+      id: String(item.menuId),
+      name: item.name,
+      price: item.price,
+      img: imageMap[item.name] || '/img/carrotcake.jpg',
+      category: item.type?.name || '',
+    }));
+  }, [food]);
 
   const [deliveryInfo, setDeliveryInfo] = useState({
     name: 'สมชาย รักขนม',
@@ -69,7 +77,7 @@ const OrderView = ({ onOrderSuccess }) => {
   };
 
   // Calculations
-  const activeOrders = initialOrderItems.filter(
+  const activeOrders = orderCatalog.filter(
     (item) => selectedItems[item.id]?.selected
   );
 
@@ -127,7 +135,7 @@ const OrderView = ({ onOrderSuccess }) => {
       <div className="order-card-header">
         <h3 className="order-title">แบบฟอร์มการสั่งซื้อสินค้า (Order Form)</h3>
         <p className="order-subtitle">
-          เลือกรายการขนม เครื่องดื่ม และไอศกรีม พร้อมระบุรายละเอียดจัดส่ง
+          เลือกรายการขนม เครื่องดื่ม และไอศกรีมจากฐานข้อมูลร้านค้า พร้อมระบุรายละเอียดจัดส่ง
         </p>
       </div>
 
@@ -137,75 +145,82 @@ const OrderView = ({ onOrderSuccess }) => {
           <div className="order-items-column">
             <h4 className="column-title">1. เลือกรายการสินค้า</h4>
 
-            <div className="order-items-list">
-              {initialOrderItems.map((item) => {
-                const orderState = selectedItems[item.id] || {
-                  selected: false,
-                  qty: 1,
-                  note: '',
-                };
+            {orderCatalog.length === 0 ? (
+              <p className="empty-subtitle">กำลังโหลดรายการสินค้าจากฐานข้อมูล...</p>
+            ) : (
+              <div className="order-items-list">
+                {orderCatalog.map((item) => {
+                  const orderState = selectedItems[item.id] || {
+                    selected: false,
+                    qty: 1,
+                    note: '',
+                  };
 
-                return (
-                  <div
-                    key={item.id}
-                    className={`order-item-row ${orderState.selected ? 'checked' : ''}`}
-                  >
-                    <label className="order-item-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={orderState.selected}
-                        onChange={() => handleToggleItem(item.id)}
-                        className="order-checkbox"
-                      />
-                      <img
-                        src={item.img}
-                        alt={item.name}
-                        className="order-thumbnail"
-                      />
-                      <div className="order-item-info">
-                        <span className="order-item-name">{item.name}</span>
-                        <span className="order-item-price">{item.price} บาท</span>
-                      </div>
-                    </label>
+                  return (
+                    <div
+                      key={item.id}
+                      className={`order-item-row ${orderState.selected ? 'checked' : ''}`}
+                    >
+                      <label className="order-item-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={orderState.selected}
+                          onChange={() => handleToggleItem(item.id)}
+                          className="order-checkbox"
+                        />
+                        <img
+                          src={item.img}
+                          alt={item.name}
+                          className="order-thumbnail"
+                        />
+                        <div className="order-item-info">
+                          <span className="order-item-name">{item.name}</span>
+                          <span className="order-item-price">{item.price} บาท</span>
+                          {item.category && (
+                            <span className="order-category-tag">{item.category}</span>
+                          )}
+                        </div>
+                      </label>
 
-                    {orderState.selected && (
-                      <div className="order-item-controls">
-                        <div className="qty-control-wrapper">
-                          <label className="qty-label">จำนวน:</label>
-                          <div className="qty-stepper">
-                            <button
-                              type="button"
-                              className="qty-btn"
-                              onClick={() => handleQtyChange(item.id, -1)}
-                            >
-                              -
-                            </button>
-                            <span className="qty-value">{orderState.qty}</span>
-                            <button
-                              type="button"
-                              className="qty-btn"
-                              onClick={() => handleQtyChange(item.id, 1)}
-                            >
-                              +
-                            </button>
+                      {orderState.selected && (
+                        <div className="order-item-controls">
+                          <div className="qty-control-wrapper">
+                            <label className="qty-label">จำนวน:</label>
+                            <div className="qty-stepper">
+                              <button
+                                type="button"
+                                className="qty-btn"
+                                onClick={() => handleQtyChange(item.id, -1)}
+                              >
+                                -
+                              </button>
+                              <span className="qty-value">{orderState.qty}</span>
+                              <button
+                                type="button"
+                                className="qty-btn"
+                                onClick={() => handleQtyChange(item.id, 1)}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="note-control-wrapper">
+                            <input
+                              type="text"
+                              placeholder="หมายเหตุ (เช่น หวานน้อย)"
+                              value={orderState.note}
+                              onChange={(e) => handleNoteChange(item.id, e.target.value)}
+                              className="order-note-input"
+                            />
                           </div>
                         </div>
-
-                        <div className="note-control-wrapper">
-                          <input
-                            type="text"
-                            placeholder="หมายเหตุ (เช่น หวานน้อย)"
-                            value={orderState.note}
-                            onChange={(e) => handleNoteChange(item.id, e.target.value)}
-                            className="order-note-input"
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Delivery & Summary Column */}
