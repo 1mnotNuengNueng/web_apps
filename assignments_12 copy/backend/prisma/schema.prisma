@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model menu {
+  menuId       Int      @id @default(autoincrement())
+  name         String
+  price        Float
+  isBestSeller Boolean  @default(false)
+  typeId       Int
+  type         type     @relation(fields: [typeId], references: [typeId], map: "Menu_typeId_fkey")
+  rating       rating[]
+
+  @@index([typeId], map: "Menu_typeId_fkey")
+}
+
+model rating {
+  userId Int
+  menuId Int
+  value  Int
+  menu   menu @relation(fields: [menuId], references: [menuId], onDelete: Cascade, map: "Rating_menuId_fkey")
+  user   user @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "Rating_userId_fkey")
+
+  @@id([userId, menuId])
+  @@index([menuId], map: "Rating_menuId_fkey")
+}
+
+model session {
+  tokenHash String   @id @db.VarChar(64)
+  userId    Int
+  expiresAt DateTime
+  user      user     @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "Session_userId_fkey")
+
+  @@index([userId], map: "Session_userId_fkey")
+}
+
+model type {
+  typeId Int    @id @default(autoincrement())
+  name   String
+  menu   menu[]
+}
+
+model user {
+  userId       Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique(map: "User_email_key")
+  passwordHash String
+  role         String    @default("user")
+  rating       rating[]
+  session      session[]
+}
